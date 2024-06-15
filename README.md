@@ -11,7 +11,7 @@ It packages the dependencies above into our jar file.
 "mvn clean install" doesn't include external dependencies as deafult. **NoClassDefFoundError** can be thrown Without shade.
 
 After building the jar file with **"mvn clean install shade:shade"**. You can run the application in bash via following command:   
-**"java -jar <jar_directory>\ScratchGame-1.0-SNAPSHOT.jar --config <config_path>\<config_file_name>.json --betting-amount 100"**
+**"java -jar <jar_directory>\ScratchGame-1.0-SNAPSHOT.jar --config <config_file> --betting-amount 100"**
 
 Example: "java -jar ScratchGame-1.0-SNAPSHOT.jar --config <path_to_project>\Cyberspeed\src\main\resources\config.json --betting-amount 10"
 
