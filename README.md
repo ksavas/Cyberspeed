@@ -24,6 +24,7 @@ The current calculation logic of the application for single symbol:
   - Bet amount.
 The logic has been inspired from output format example in the assignment. The A symbol also matches with same_symbol_3_times and same_symbol_4_times.
 But only the highest (same_symbol_5_times) was included in the calculation.
+
 Example
   - 2 Symbols match the combinations:
     - A: same_symbol_3_times, same_symbol_4_times, same_symbol_5_times, same_symbols_horizontally
