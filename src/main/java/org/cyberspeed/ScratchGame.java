@@ -6,28 +6,61 @@ import org.cyberspeed.Entity.GameResult;
 import org.cyberspeed.Service.GameJsonUtils;
 import org.cyberspeed.Service.MatrixGenerator;
 import org.cyberspeed.Service.WinChecker;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 public class ScratchGame {
-    private static final Logger LOGGER = Logger.getLogger(ScratchGame.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(ScratchGame.class);
     private static final String CONFIG_FILE_PATH = "src/main/resources/config.json";
 
     public static void main(String[] args) throws IOException {
-        GameConfig config = GameJsonUtils.getInstance().parseConfig(CONFIG_FILE_PATH);
+        Parameters parameters = readParameters(args);
+
+        GameConfig config = GameJsonUtils.getInstance().parseConfig(parameters.getConfigPath());
         LOGGER.info("Configuration has been loaded");
 
         MatrixGenerator matrixGenerator = new MatrixGenerator(config);
         String[][] matrix = matrixGenerator.generateMatrix();
         LOGGER.info("Random matrix has been generated");
 
-        Integer betAmount = Integer.valueOf(100);
-
         WinChecker winChecker = new WinChecker(config);
-        GameResult gameResult = winChecker.checkWin(matrix,betAmount);
+        GameResult gameResult = winChecker.checkWin(matrix,parameters.getBetAmount());
 
-        printResult(gameResult,betAmount);
+        printResult(gameResult,parameters.getBetAmount());
+    }
+
+    private static Parameters readParameters(String[] args){
+        Parameters parameters = new Parameters();
+        String configPath = "";
+        Integer betAmount = 0;
+
+        if (args.length < 2) {
+            LOGGER.info("Usage: java -jar <your-jar-file> --config <config-file-path> --betting-amount <betting-amount>");
+            System.exit(1);
+            return null;
+        }
+        for (int i = 0; i < args.length; i++) {
+            switch (args[i]) {
+                case "--config":
+                    configPath = args[++i];
+                    break;
+                case "--betting-amount":
+                    betAmount = Integer.parseInt(args[++i]);
+                    break;
+            }
+        }
+
+        if (configPath == null || betAmount <= 0) {
+            System.err.println("Invalid arguments");
+            System.exit(1);
+        }
+
+        parameters.setConfigPath(configPath);
+        parameters.setBetAmount(betAmount);
+
+        return parameters;
     }
 
     private static void printResult(GameResult gameResult, Integer betAmount) throws JsonProcessingException {
