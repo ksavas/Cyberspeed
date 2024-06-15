@@ -2,17 +2,17 @@ package org.cyberspeed.Service;
 
 
 import org.cyberspeed.Entity.GameConfig;
-import org.cyberspeed.Entity.StandardSymbolProbability;
+import org.cyberspeed.Entity.StandardSymbol;
 
 import java.util.Map;
 import java.util.Random;
 public class MatrixGenerator {
     private GameConfig config;
-    private StandardSymbolProbability defaultProbability;
+    private StandardSymbol defaultProbability;
 
     public MatrixGenerator(GameConfig config) {
         this.config = config;
-        this.defaultProbability = StandardSymbolProbability.getDefaultProbability(config);
+        this.defaultProbability = StandardSymbol.getDefaultProbability(config);
     }
 
     public String[][] generateMatrix() {
@@ -23,7 +23,7 @@ public class MatrixGenerator {
         Random random = new Random();
 
         generateStandardSymbols(matrix,rows,columns,random);
-        placeBonusSymbols(matrix, random);
+        placeBonusSymbol(matrix, random);
 
         return matrix;
     }
@@ -31,27 +31,42 @@ public class MatrixGenerator {
     private void generateStandardSymbols(String[][] matrix,int rows, int columns,Random random){
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < columns; column++) {
-                StandardSymbolProbability prob = getProbabilityForCell(row, column);
-                matrix[row][column] = getRandomSymbol(prob.getSymbols(), random);
+                StandardSymbol prob = getStandardSymbol(row, column);
+                matrix[row][column] = getSymbolFromStandardSymbol(prob.getSymbols(), random);
             }
         }
     }
 
-    private StandardSymbolProbability getProbabilityForCell(int row, int column) {
-        return config.getProbabilities().getStandardSymbols().stream()
+    private StandardSymbol getStandardSymbol(int row, int column) {
+        return config.getProbabilities()
+                .getStandardSymbols()
+                .stream()
                 .filter(prob -> prob.getRow() == row && prob.getColumn() == column)
                 .findFirst()
                 .orElse(defaultProbability);
     }
 
-    private String getRandomSymbol(Map<String, Integer> symbols, Random random) {
-        int totalWeight = symbols.values().stream().mapToInt(Integer::intValue).sum();
+    private String getSymbolFromStandardSymbol(Map<String, Integer> symbols, Random random) {
+        int totalWeight = symbols
+                .values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+
         return getWeightedRandomSymbol(symbols, totalWeight, random);
     }
 
-    private void placeBonusSymbols(String[][] matrix, Random random) {
-        Map<String, Integer> bonusSymbols = config.getProbabilities().getBonusSymbols().getSymbols();
-        int totalWeight = bonusSymbols.values().stream().mapToInt(Integer::intValue).sum();
+    private void placeBonusSymbol(String[][] matrix, Random random) {
+        Map<String, Integer> bonusSymbols = config
+                .getProbabilities()
+                .getBonusSymbol()
+                .getSymbols();
+
+        int totalWeight = bonusSymbols
+                .values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
 
         int row = random.nextInt(matrix.length);
         int column = random.nextInt(matrix[0].length);

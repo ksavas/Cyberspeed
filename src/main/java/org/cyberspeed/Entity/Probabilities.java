@@ -8,9 +8,9 @@ import java.util.List;
 @Data
 public class Probabilities {
     @JsonProperty("standard_symbols")
-    private List<StandardSymbolProbability> standardSymbols;
+    private List<StandardSymbol> standardSymbols;
 
     @JsonProperty("bonus_symbols")
-    private BonusSymbols bonusSymbols;
+    private BonusSymbol bonusSymbol;
 }
 

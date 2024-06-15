@@ -5,6 +5,6 @@ import lombok.Data;
 import java.util.Map;
 
 @Data
-public class BonusSymbols {
+public class BonusSymbol {
     private Map<String, Integer> symbols;
 }
