@@ -5,12 +5,18 @@ The following dependencies were utilized:
   - Lombok: code cleanliness.
   - Log4j: Logging application steps and show json result with result message.
 
-**mvn clean install shade:shade**: Please use this command in order to build and execute the application. 
+## Build/Execution Notes
+**"mvn clean install shade:shade"**: Please use this command in order to build and execute the application. 
 It packages the dependencies above into our jar file. 
+"mvn clean install" doesn't include external dependencies as deafult. **NoClassDefFoundError** can be thrown Without shade.
 
-"mvn clean install" doesn't include external dependencies as deafult. NoClassDefFoundError can be thrown Without shade.
+After building the jar file with **"mvn clean install shade:shade"**. You can run the application in bash via following command:   
+**"java -jar <jar_directory>\ScratchGame-1.0-SNAPSHOT.jar --config <config_path>\<config_file_name>.json --betting-amount 100"**
 
-** Notes **
+Example: "java -jar ScratchGame-1.0-SNAPSHOT.jar --config <path_to_project>\Cyberspeed\src\main\resources\config.json --betting-amount 10"
+
+
+## Business Logic Notes
 The current calculation logic of the application for single symbol:
   - Reward of symbol
   - The reward of the highest reward from the same_symbol win combinations
