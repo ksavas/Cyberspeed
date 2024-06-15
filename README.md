@@ -28,8 +28,9 @@ But only the highest (same_symbol_5_times) was included in the calculation.
 
 Example
   - 2 Symbols match the combinations:
-    - A: same_symbol_3_times, same_symbol_4_times, same_symbol_5_times, same_symbols_horizontally
+    - A: same_symbol_3_times, same_symbol_4_times, same_symbol_5_times, same_symbols_horizontally, same_symbols_vertically
     - B: same_symbol_3_times, same_symbols_horizontally
   - Total reward: (bet_amount * reward(A) * reward(same_symbol_5_times) * reward(same_symbols_horizontally)) + (bet_amount * reward(B) * reward(same_symbol_3_times) * reward(same_symbols_horizontally))
+    - In this scenario ->  reward(same_symbols_horizontally) > reward(same_symbols_vertically)
 
 The output format and examples inside assignment have been covered in unit tests.
