@@ -1,7 +1,7 @@
 # Scratch Game
 The game of chance compiled and build with java 1.8
 The following dependencies were utilized:
-  - Jackson Databind: Serialize/Deserialize json.
+  - Jackson Databind: json operations.
   - Lombok: code cleanliness.
   - Log4j: Logging application steps and show json result with result message.
 
