@@ -22,6 +22,7 @@ The current calculation logic of the application for single symbol:
   - The reward of the highest reward from the same_symbol win combinations
   - The reward of the highest reward from the linear_symbol win combinations
   - Bet amount.
+
 The logic has been inspired from output format example in the assignment. The A symbol also matches with same_symbol_3_times and same_symbol_4_times.
 But only the highest (same_symbol_5_times) was included in the calculation.
 
