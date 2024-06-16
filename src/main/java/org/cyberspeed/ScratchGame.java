@@ -33,7 +33,7 @@ public class ScratchGame {
 
     private static Parameters readParameters(String[] args){
         Parameters parameters = new Parameters();
-        String configPath = "";
+        String configPath = null;
         Integer betAmount = 0;
 
         if (args.length < 2) {
